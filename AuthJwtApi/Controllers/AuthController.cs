@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using AuthJwtApi.DTO;
+using Microsoft.AspNetCore.Http;
 using AuthJwtApi.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -24,7 +25,8 @@ public class AuthController : Controller
     public async Task<ActionResult<User>> Register(UserDTO request)
     {
         CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
+        
+        user.Username = request.Username;
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
 
